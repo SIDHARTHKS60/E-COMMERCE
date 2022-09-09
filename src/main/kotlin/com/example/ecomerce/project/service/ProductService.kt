@@ -11,6 +11,7 @@ import reactor.core.publisher.Flux
 class ProductService
     (val productRepository: ProductRepository) {
         fun getAllProducts(): Flux<Product> {
-           return productRepository.findAll()
-    }
+           return productRepository.findAll()    }
+
+
     }

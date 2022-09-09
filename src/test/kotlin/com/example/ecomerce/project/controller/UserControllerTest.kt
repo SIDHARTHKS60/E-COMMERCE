@@ -43,7 +43,7 @@ class UserControllerTest {
                 "password" to "abcd@abca"),)
 
         every{
-            userService.findAll() } returns Flux.just(user1,user2)
+            userService.findAllUsers() } returns Flux.just(user1,user2)
 
         val response = client.get()
             .uri("/users/lists")
@@ -57,7 +57,7 @@ class UserControllerTest {
         //response.blockLast() shouldBe expectedResult[1]
 
         verify(exactly = 1) {
-            userService.findAll()
+            userService.findAllUsers()
         }
         }
 
@@ -73,7 +73,7 @@ class UserControllerTest {
         val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
 
         every {
-            userService.addUsers(user)
+            userService.addUser(user)
         } returns Mono.just(user)
 
         val response = client.post()
@@ -86,7 +86,7 @@ class UserControllerTest {
         response.blockFirst() shouldBe exepectedResponse
 
         verify(exactly = 1) {
-            userService.addUsers(user)
+            userService.addUser(user)
         }
     }
 

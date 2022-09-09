@@ -8,6 +8,7 @@ class EcomerceProjectApplicationTests {
 
 	@Test
 	fun contextLoads() {
+
 	}
 
 }

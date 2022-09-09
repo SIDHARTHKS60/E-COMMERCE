@@ -14,21 +14,21 @@ class UserController
 
     @GetMapping("lists")
     fun getAllUsers(): Flux<User> {
-        return userService.findAll()
+        return userService.findAllUsers()
     }
 
     @PostMapping("add")
     fun addUser(@RequestBody user: User): Mono<User> {
-        return userService.addUsers(user)
+        return userService.addUser(user)
     }
 
-    @DeleteMapping("delete/{id}")
-    fun deleteUserById(@PathVariable("id") userId: Int): Mono<Void> {
+    @DeleteMapping("delete/{userId}")
+    fun deleteUserById(@PathVariable("userId") userId: Int): Mono<Void> {
         return userService.deleteUserById(userId)
     }
 
-    @PutMapping("update/{id}")
-    fun updateUserById(@PathVariable("id") userId: Int, @RequestBody user: User): Mono<User> {
+    @PutMapping("update/{userId}")
+    fun updateUserById(@PathVariable("userId") userId: Int, @RequestBody user: User): Mono<User> {
         return userService.updateUser(userId, user)
     }
     /*@GetMapping("login/{name}")

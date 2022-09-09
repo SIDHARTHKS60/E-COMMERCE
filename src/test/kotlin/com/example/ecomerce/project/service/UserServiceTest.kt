@@ -18,21 +18,30 @@ class UserServiceTest {
     private val userRepository = mockk<UserRepository>() {
 
         every {
+            save(user1)
+        }returns Mono.just(user1)
+
+        every {
             findAll()
         } returns Flux.just(user1, user2)
 
-        /* every {
-            deleteById("999")
-        } returns Mono.just(user)
-    }*/
+        every {
+            deleteById(999)
+        }
     }
+
     private val userService = UserService(userRepository)
 
-    @Test
-    fun `should return books when find all method is called`() {
+    /*@Test
+    fun `should add user to repsitory`(){
+        val firstUser=userService.addUser().blockFirst()
 
-        val firstUser = userService.findAll().blockFirst()
-        val secondUser = userService.findAll().blockLast()
+    }*/
+    @Test
+    fun `should return users when find  method is called`() {
+
+        val firstUser = userService.findAllUsers().blockFirst()
+        val secondUser = userService.findAllUsers().blockLast()
 
         if (firstUser != null) {
             firstUser shouldBe user1
@@ -44,19 +53,19 @@ class UserServiceTest {
 
     @Test
     fun `should expect on complete call post all the books are retrieved`() {
-
         //StepVerifier takes care of subscribing
-
-        StepVerifier.create(userService.findAll()).expectSubscription().expectNext(user1).expectNext(user2)
+        StepVerifier.create(userService.findAllUsers()).expectSubscription().expectNext(user1).expectNext(user2)
             .verifyComplete()
-        StepVerifier.create(userService.findAll()).expectNextCount(2).verifyComplete()
+        StepVerifier.create(userService.findAllUsers()).expectNextCount(2).verifyComplete()
     }
 
-   /* @Test
+   @Test
     fun `should delete the user on the basis of the id`() {
 
-        val result = userService.deleteById(999)
+        val result = userService.deleteUserById(999)
 
-        result shouldBe user1
-    }*/
+        //result shouldBe user1
+    }
 }
+
+
