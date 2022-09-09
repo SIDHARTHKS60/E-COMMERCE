@@ -1,7 +1,8 @@
 package com.example.ecomerce.project.service
 
 //import com.example.ecomerce.project.exceptions.UserServiceException
-import com.example.ecomerce.project.exceptions.UserServiceException
+import com.example.ecomerce.project.exceptions.UserIdException
+import com.example.ecomerce.project.exceptions.UserNotFoundException
 import com.example.ecomerce.project.model.User
 import com.example.ecomerce.project.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,21 +12,31 @@ import reactor.core.publisher.Mono
 
 @Service
 class UserService(
-
     @Autowired
     val userRepository: UserRepository
 ) {
 
     fun addUser(user: User): Mono<User> {
-        if(user.userId==0){throw UserServiceException("User should id not zero")}
+        if (user.userId == 0) {
+            throw UserIdException("User should id not zero")
+        }
         return userRepository.save(user)
     }
-    fun findAllUsers(): Flux<User> =
-        userRepository.findAll()
+
+    fun findAllUsers(): Flux<User> {
+        if (userRepository.findAll() == null) {
+            throw UserNotFoundException("User not present in Database")
+        }
+        return userRepository.findAll()
+    }
 
     fun deleteUserById(userId: Int): Mono<Void> {
+        if (userId == 0) {
+            throw UserIdException("User should id should  not zero")
+        }
         return userRepository.deleteById(userId)
     }
+
     fun updateUser(userId: Int, user: User): Mono<User> {
         return userRepository.findById(userId)
             .flatMap {
