@@ -34,4 +34,20 @@ class ExceptionControllerAdvice {
         )
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }
+//    @ExceptionHandler
+//    fun handleProductServiceException(ex: ProductIdException): ResponseEntity<ErrorMessageModel> {
+//        val errorMessage = ErrorMessageModel(
+//            HttpStatus.NOT_FOUND.value(),
+//            ex.message
+//        )
+//        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
+//    }
+    @ExceptionHandler
+    fun handleProductNotFoundException(ex: ProductNotFoundException): ResponseEntity<ErrorMessageModel> {
+        val errorMessage = ErrorMessageModel(
+            HttpStatus.NOT_FOUND.value(),
+            ex.message
+        )
+        return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
+    }
 }

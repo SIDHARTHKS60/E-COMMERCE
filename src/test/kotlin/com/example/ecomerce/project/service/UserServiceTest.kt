@@ -52,7 +52,7 @@ class UserServiceTest {
     }
 
     @Test
-    fun `should expect on complete call post all the books are retrieved`() {
+    fun `should expect on complete call post all the Users are retrieved`() {
         //StepVerifier takes care of subscribing
         StepVerifier.create(userService.findAllUsers()).expectSubscription().expectNext(user1).expectNext(user2)
             .verifyComplete()

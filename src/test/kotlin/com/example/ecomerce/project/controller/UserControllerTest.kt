@@ -7,9 +7,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType
@@ -22,28 +23,34 @@ import reactor.core.publisher.Mono
 @AutoConfigureWebTestClient
 class UserControllerTest {
     @Autowired
-    lateinit var client : WebTestClient
+    lateinit var client: WebTestClient
 
     @Autowired
-    lateinit var userService : UserService
+    lateinit var userService: UserService
 
     @Test
-    fun `should return list of users`(){
-        val user1 = User(999,"Rahul" ,1234567890 , "abcd@abcd")
-        val user2 = User(888,"Ramesh" , 1234567891 , "abcd@abca")
+    fun `should return list of users`() {
+        val user1 = User(999, "Rahul", 1234567890, "abcd@abcd")
+        val user2 = User(888, "Ramesh", 1234567891, "abcd@abca")
 
         val expectedResult = listOf(
-            mapOf("id" to 999,
+            mapOf(
+                "id" to 999,
                 "name" to "Rahul",
                 "contactno" to 1234567890,
-                "password" to "abcd@abcd" ),
-            mapOf("id" to 888,
+                "password" to "abcd@abcd"
+            ),
+            mapOf(
+                "id" to 888,
                 "name" to "Ramesh",
                 "contactno" to 1234567891,
-                "password" to "abcd@abca"),)
+                "password" to "abcd@abca"
+            ),
+        )
 
-        every{
-            userService.findAllUsers() } returns Flux.just(user1,user2)
+        every {
+            userService.findAllUsers()
+        } returns Flux.just(user1, user2)
 
         val response = client.get()
             .uri("/users/lists")
@@ -59,7 +66,7 @@ class UserControllerTest {
         verify(exactly = 1) {
             userService.findAllUsers()
         }
-        }
+    }
 
     @Test
     fun `should create user when create api is being called`() {
@@ -68,9 +75,10 @@ class UserControllerTest {
             "id" to 999,
             "name" to "Rahul",
             "contactno" to 1234567890,
-            "password" to "abcd@abcd" )
+            "password" to "abcd@abcd"
+        )
 
-        val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
+        val user = User(999, "Rahul", 1234567890, "abcd@abcd")
 
         every {
             userService.addUser(user)
@@ -89,6 +97,47 @@ class UserControllerTest {
             userService.addUser(user)
         }
     }
+//    @Test
+//    fun `should be able to delete the user`() {
+//
+//        val expectedResult = listOf(
+//            mapOf( "id" to 999,
+//                "name" to "Rahul",
+//                "contactno" to 1234567890,
+//                "password" to "abcd@abcd" )
+//        )
+//        val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
+//
+//        every {
+//            userService.deleteUserById(999)
+//        }
+//
+//        val response = client.delete()
+//            .uri("delete/15")
+//
+//            .exchange()
+//            .expectStatus().is2xxSuccessful
+//
+//        response shouldBe expectedResult
+//
+//        verify(exactly = 1) {
+//            userService.deleteUserById(999)
+//        }
+//    }
+
+//    @Test
+//    fun testDeleteUserById() {
+//
+//        `when`(userService.deleteUserById(1))
+//            .thenReturn(Mono.just())
+//
+//        client.delete()
+//            .uri("delete/{id}")
+//            .exchange()
+//            .expectStatus().isOk()
+//            .shouldBe("Employee with id 1 is deleted.")
+//    }
+
 
   /*    @Test
          fun `should be able to update the user`() {
@@ -124,4 +173,8 @@ class UserControllerTest {
     }
 
 }
+
+
+
+
 
