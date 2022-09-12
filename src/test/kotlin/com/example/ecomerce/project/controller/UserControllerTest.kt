@@ -11,19 +11,29 @@ import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.get
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @WebFluxTest(UserController::class)
+@SpringBootTest
 @AutoConfigureWebTestClient
+@AutoConfigureMockMvc
 class UserControllerTest {
     @Autowired
     lateinit var client: WebTestClient
+
+    @Autowired
+    lateinit var mockMvc: MockMvc
 
     @Autowired
     lateinit var userService: UserService
@@ -125,28 +135,43 @@ class UserControllerTest {
         }
    }*/
 
- /*   @Test
+    @Test
     fun testDeleteUserById() {
 
-        `when`(userService.deleteUserById(1))
-            .thenReturn(Mono.just("Employee with id 1 is deleted."))
+        val userId=999
 
-        client.delete()
-            .uri("delete/{id}")
-            .exchange()
-          .expectStatus().isOk()
-          .shouldBe("Employee with id 1 is deleted.")
-    }*/
+        mockMvc.delete("delete/$userId")
+            .andDo { print() }
+            .andExpect {
+                status { isNoContent() }
+            }
+
+        mockMvc.get("find/$userId")
+            .andExpect { status { isNotFound() } }
+
+
+        /*`when`(userService.deleteUserById(1))
+            .thenReturn(Mono.just("Employee with id 1 is deleted."))*/
+
+
+
+
+        /*   client.delete()
+             .uri("delete/{id}")
+           .exchange()
+             .expectStatus().isOk()
+              .shouldBe("Employee with id 1 is deleted.")*/
+    }
 
 
     @Test
          fun `should be able to update the user`() {
 
               val expectedResult = listOf(
-                  mapOf( "id" to 999,
-                      "name" to "Rahul",
-                      "contactno" to 1234567890,
-                      "password" to "abcd@abcd" )
+                  mapOf( "userId" to 999,
+                      "userName" to "Rahul",
+                      "userContactno" to 1234567890,
+                      "userPassword" to "abcd@abcd" )
               )
               val user = User(999,"Rahul K" ,1234567891 , "abcd@abcd")
 
@@ -155,12 +180,12 @@ class UserControllerTest {
               } returns Mono.just(user)
 
               val response = client.put()
-                  .uri("users/update/id")
+                  .uri("users/update/999")
                   .bodyValue(user)
                   .exchange()
                   .expectStatus().is2xxSuccessful
 
-          //response shouldBe expectedResult
+               // response shouldBe expectedResult
 
               verify(exactly = 1) {
                   userService.updateUser(999,user)

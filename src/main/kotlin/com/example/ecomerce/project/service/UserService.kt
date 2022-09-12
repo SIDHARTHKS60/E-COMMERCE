@@ -30,6 +30,10 @@ class UserService(
         return userRepository.findAll()
     }
 
+    fun   findUserById(userId: Int):Mono<User>{
+        return userRepository.findById(userId)
+    }
+
     fun deleteUserById(userId: Int): Mono<Void> {
         if (userId == 0) {
             throw UserIdException("User should id should  not zero")

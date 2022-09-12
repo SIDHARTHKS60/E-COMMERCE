@@ -16,6 +16,10 @@ class UserController
     fun getAllUsers(): Flux<User> {
         return userService.findAllUsers()
     }
+    @GetMapping("find/{userId}")
+    fun findUserById(@PathVariable("userId") userId: Int):Mono<User>{
+        return userService.findUserById(userId)
+    }
 
     @PostMapping("add")
     fun addUser(@RequestBody user: User): Mono<User> {
