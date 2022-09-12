@@ -31,6 +31,7 @@ class UserController
     fun updateUserById(@PathVariable("userId") userId: Int, @RequestBody user: User): Mono<User> {
         return userService.updateUser(userId, user)
     }
+
     /*@GetMapping("login/{name}")
    fun getUserByName(@PathVariable("name") name:String,passw):Mono<User> {
        return userService.findUserByName(name,password)

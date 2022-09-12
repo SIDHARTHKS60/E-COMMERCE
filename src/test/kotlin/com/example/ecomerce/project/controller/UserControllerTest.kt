@@ -35,16 +35,16 @@ class UserControllerTest {
 
         val expectedResult = listOf(
             mapOf(
-                "id" to 999,
-                "name" to "Rahul",
-                "contactno" to 1234567890,
-                "password" to "abcd@abcd"
+                "userId" to 999,
+                "userName" to "Rahul",
+                "userContactno" to 1234567890,
+                "userPassword" to "abcd@abcd"
             ),
             mapOf(
-                "id" to 888,
-                "name" to "Ramesh",
-                "contactno" to 1234567891,
-                "password" to "abcd@abca"
+                "userId" to 888,
+                "userName" to "Ramesh",
+                "userContactno" to 1234567891,
+                "userPassword" to "abcd@abca"
             ),
         )
 
@@ -61,7 +61,7 @@ class UserControllerTest {
             .responseBody
 
         response.blockFirst() shouldBe expectedResult[0]
-        //response.blockLast() shouldBe expectedResult[1]
+       //response.blockLast() shouldBe expectedResult[1]
 
         verify(exactly = 1) {
             userService.findAllUsers()
@@ -72,10 +72,10 @@ class UserControllerTest {
     fun `should create user when create api is being called`() {
 
         val exepectedResponse = mapOf(
-            "id" to 999,
-            "name" to "Rahul",
-            "contactno" to 1234567890,
-            "password" to "abcd@abcd"
+            "userId" to 999,
+            "userName" to "Rahul",
+            "userContactno" to 1234567890,
+            "userPassword" to "abcd@abcd"
         )
 
         val user = User(999, "Rahul", 1234567890, "abcd@abcd")
@@ -97,49 +97,49 @@ class UserControllerTest {
             userService.addUser(user)
         }
     }
-//    @Test
-//    fun `should be able to delete the user`() {
-//
-//        val expectedResult = listOf(
-//            mapOf( "id" to 999,
-//                "name" to "Rahul",
-//                "contactno" to 1234567890,
-//                "password" to "abcd@abcd" )
-//        )
-//        val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
-//
-//        every {
-//            userService.deleteUserById(999)
-//        }
-//
-//        val response = client.delete()
-//            .uri("delete/15")
-//
-//            .exchange()
-//            .expectStatus().is2xxSuccessful
-//
-//        response shouldBe expectedResult
-//
-//        verify(exactly = 1) {
-//            userService.deleteUserById(999)
-//        }
-//    }
 
-//    @Test
-//    fun testDeleteUserById() {
-//
-//        `when`(userService.deleteUserById(1))
-//            .thenReturn(Mono.just())
-//
-//        client.delete()
-//            .uri("delete/{id}")
-//            .exchange()
-//            .expectStatus().isOk()
-//            .shouldBe("Employee with id 1 is deleted.")
-//    }
+    /*   @Test
+   fun `should be able to delete the user`() {
+
+         val expectedResult = listOf(
+             mapOf( "id" to 999,
+                 "name" to "Rahul",     "contactno" to 1234567890,
+                 "password" to "abcd@abcd" )
+        )
+         val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
+
+         every {
+             userService.deleteUserById(999)
+         }
+
+         val response = client.delete()
+             .uri("delete/15")
+
+             .exchange()
+             .expectStatus().is2xxSuccessful
+
+         response shouldBe expectedResult
+
+         verify(exactly = 1) {
+             userService.deleteUserById(999)
+        }
+   }*/
+
+ /*   @Test
+    fun testDeleteUserById() {
+
+        `when`(userService.deleteUserById(1))
+            .thenReturn(Mono.just("Employee with id 1 is deleted."))
+
+        client.delete()
+            .uri("delete/{id}")
+            .exchange()
+          .expectStatus().isOk()
+          .shouldBe("Employee with id 1 is deleted.")
+    }*/
 
 
-  /*    @Test
+    @Test
          fun `should be able to update the user`() {
 
               val expectedResult = listOf(
@@ -148,7 +148,7 @@ class UserControllerTest {
                       "contactno" to 1234567890,
                       "password" to "abcd@abcd" )
               )
-              val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
+              val user = User(999,"Rahul K" ,1234567891 , "abcd@abcd")
 
               every {
                   userService.updateUser(999,user)
@@ -165,7 +165,7 @@ class UserControllerTest {
               verify(exactly = 1) {
                   userService.updateUser(999,user)
               }
-          }*/
+          }
     @TestConfiguration
     class ControllerTestConfig {
         @Bean
