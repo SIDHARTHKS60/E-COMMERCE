@@ -11,19 +11,29 @@ import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.returnResult
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.get
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @WebFluxTest(UserController::class)
+//@SpringBootTest
 @AutoConfigureWebTestClient
+//@AutoConfigureMockMvc
 class UserControllerTest {
     @Autowired
     lateinit var client: WebTestClient
+
+   /* @Autowired
+    lateinit var mockMvc: MockMvc*/
 
     @Autowired
     lateinit var userService: UserService
@@ -35,16 +45,16 @@ class UserControllerTest {
 
         val expectedResult = listOf(
             mapOf(
-                "id" to 999,
-                "name" to "Rahul",
-                "contactno" to 1234567890,
-                "password" to "abcd@abcd"
+                "userId" to 999,
+                "userName" to "Rahul",
+                "userContactno" to 1234567890,
+                "userPassword" to "abcd@abcd"
             ),
             mapOf(
-                "id" to 888,
-                "name" to "Ramesh",
-                "contactno" to 1234567891,
-                "password" to "abcd@abca"
+                "userId" to 888,
+                "userName" to "Ramesh",
+                "userContactno" to 1234567891,
+                "userPassword" to "abcd@abca"
             ),
         )
 
@@ -72,10 +82,10 @@ class UserControllerTest {
     fun `should create user when create api is being called`() {
 
         val exepectedResponse = mapOf(
-            "id" to 999,
-            "name" to "Rahul",
-            "contactno" to 1234567890,
-            "password" to "abcd@abcd"
+            "userId" to 999,
+            "userName" to "Rahul",
+            "userContactno" to 1234567890,
+            "userPassword" to "abcd@abcd"
         )
 
         val user = User(999, "Rahul", 1234567890, "abcd@abcd")
@@ -97,84 +107,99 @@ class UserControllerTest {
             userService.addUser(user)
         }
     }
-//    @Test
-//    fun `should be able to delete the user`() {
-//
-//        val expectedResult = listOf(
-//            mapOf( "id" to 999,
-//                "name" to "Rahul",
-//                "contactno" to 1234567890,
-//                "password" to "abcd@abcd" )
-//        )
-//        val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
-//
-//        every {
-//            userService.deleteUserById(999)
-//        }
-//
-//        val response = client.delete()
-//            .uri("delete/15")
-//
-//            .exchange()
-//            .expectStatus().is2xxSuccessful
-//
-//        response shouldBe expectedResult
-//
-//        verify(exactly = 1) {
-//            userService.deleteUserById(999)
-//        }
-//    }
 
-//    @Test
-//    fun testDeleteUserById() {
-//
-//        `when`(userService.deleteUserById(1))
-//            .thenReturn(Mono.just())
-//
-//        client.delete()
-//            .uri("delete/{id}")
-//            .exchange()
-//            .expectStatus().isOk()
-//            .shouldBe("Employee with id 1 is deleted.")
-//    }
+  /*  @Test
+   fun `should be able to delete the user`() {
+
+       *//* val expectedResult = listOf(
+             mapOf( "id" to 999,
+                 "name" to "Rahul",
+                 "contactno" to 1234567890,
+                 "password" to "abcd@abcd" ) )*//*
+
+        val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
+        val userId=99
+        every {
+             userService.deleteUserById(999) }
+
+        val response1=client.get("find/$userId")
+                            .returnResult
+                            .shouldBe(status { isNotFound() })
+                            //andExpect
+                            //{ status { isNotFound() } }
+
+         val response = client.delete()
+             .uri("delete/15")
+             .exchange()
+             .expectStatus().is2xxSuccessful
+
+         response shouldBe expectedResult
+
+         verify(exactly = 1) {
+             userService.deleteUserById(999)
+        }
+   }*/
+
+    /*
+   @Test
+
+   fun testDeleteUserById() {
+
+      val userId=999
+
+       mockMvc.delete("delete/$userId")
+           .andDo { print() }
+           .andExpect {
+               status { isNoContent() }
+           }
+
+      cilent.get("find/$userId")
+           .andExpect { status { isNotFound() } }
 
 
-  /*    @Test
-         fun `should be able to update the user`() {
+       `when`(userService.deleteUserById(1))
+           .thenReturn(Mono.just("Employee with id 1 is deleted."))
 
-              val expectedResult = listOf(
-                  mapOf( "id" to 999,
-                      "name" to "Rahul",
-                      "contactno" to 1234567890,
-                      "password" to "abcd@abcd" )
-              )
-              val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
+          client.delete()
+            .uri("delete/{id}")
+          .exchange()
+            .expectStatus().isOk()
+             .shouldBe("Employee with id 1 is deleted.")
+   }*/
+   @Test
+        fun `should be able to update the user`() {
 
-              every {
-                  userService.updateUser(999,user)
-              } returns Mono.just(user)
+             val expectedResult =mapOf(
+                 "userId" to 999,
+                 "userName" to "Rahul",
+                 "userContactno" to 1234567890,
+                 "userPassword" to "abcd@abcd" )
 
-              val response = client.put()
-                  .uri("users/update/id")
-                  .bodyValue(user)
-                  .exchange()
-                  .expectStatus().is2xxSuccessful
+             val user = User(999,"Rahul K" ,1234567891 , "abcd@abcd")
 
-          //response shouldBe expectedResult
+             every {
+                 userService.updateUser(999,user)
+             } returns Mono.just(user)
 
-              verify(exactly = 1) {
-                  userService.updateUser(999,user)
-              }
-          }*/
-    @TestConfiguration
-    class ControllerTestConfig {
-        @Bean
-        fun userService() = mockk<UserService>()
-    }
+             val response = client.put()
+                 .uri("/users/update/999")
+                 .bodyValue(user)
+                 .exchange()
+                 .expectStatus().is2xxSuccessful
+
+              // response shouldBe expectedResult
+
+             verify(exactly = 1) {
+                 userService.updateUser(999,user)
+             }
+         }
+
+        @TestConfiguration
+        class ControllerTestConfig {
+            @Bean
+            fun userService() = mockk<UserService>()
+        }
 
 }
-
-
-
 
 
