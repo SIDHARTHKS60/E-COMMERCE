@@ -187,8 +187,6 @@ class UserControllerTest {
                  .exchange()
                  .expectStatus().is2xxSuccessful
 
-              // response shouldBe expectedResult
-
              verify(exactly = 1) {
                  userService.updateUser(999,user)
              }
