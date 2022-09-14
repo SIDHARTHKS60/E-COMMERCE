@@ -30,7 +30,7 @@ class UserService(
         return userRepository.findAll()
     }
 
-    fun   findUserById(userId: Int):Mono<User>{
+    fun findUserById(userId: Int):Mono<User>{
         return userRepository.findById(userId)
     }
 

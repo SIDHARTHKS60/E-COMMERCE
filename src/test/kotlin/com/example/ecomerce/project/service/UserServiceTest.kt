@@ -59,13 +59,13 @@ class UserServiceTest {
         StepVerifier.create(userService.findAllUsers()).expectNextCount(2).verifyComplete()
     }
 
-   @Test
+  /* @Test
     fun `should delete the user on the basis of the id`() {
 
         val result = userService.deleteUserById(999)
 
         //result shouldBe user1
-    }
+    }*/
 }
 
 
