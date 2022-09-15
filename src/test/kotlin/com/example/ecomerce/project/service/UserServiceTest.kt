@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono
 import reactor.test.StepVerifier
 
 class UserServiceTest {
+
     // mocking the repository layer response
     val user1 = User(999, "Rahul", 1234567890, "abcd@abcd")
     val user2 = User(888, "Rohit", 1234567891, "abcd@abca")
@@ -32,15 +33,25 @@ class UserServiceTest {
         every {
             deleteById(999)
         }
-    }
+        every {
+
+        } }
+
 
     private val userService = UserService(userRepository)
 
-    /*@Test
-    fun `should add user to repsitory`(){
-        val firstUser=userService.addUser().blockFirst()
+    @Test
+    fun `should show all users`(){
+        userService.findAllUsers()
+    }
 
-    }*/
+    @Test
+    fun `should add user to repsitory`(){
+
+        val firstUser=userService.addUser(user1)
+        firstUser shouldBe user1
+
+    }
     @Test
     fun `should return users when find  method is called`() {
 
@@ -58,18 +69,26 @@ class UserServiceTest {
     @Test
     fun `should expect on complete call post all the Users are retrieved`() {
         //StepVerifier takes care of subscribing
-        StepVerifier.create(userService.findAllUsers()).expectSubscription().expectNext(user1).expectNext(user2)
+        StepVerifier.create(userService.findAllUsers())
+            .expectSubscription()
+            .expectNext(user1)
+            .expectNext(user2)
             .verifyComplete()
-        StepVerifier.create(userService.findAllUsers()).expectNextCount(2).verifyComplete()
+        StepVerifier.create(userService.findAllUsers())
+            .expectNextCount(2)
+            .verifyComplete()
     }
 
-  /* @Test
+   @Test
     fun `should delete the user on the basis of the id`() {
 
         val result = userService.deleteUserById(999)
 
-        //result shouldBe user1
-    }*/
+        StepVerifier.create(userService.deleteUserById(999))
+            .expectSubscription()
+            .verifyComplete()
+       result shouldBe null
+    }
 }
 
 

@@ -13,8 +13,7 @@ import reactor.core.publisher.Mono
 @Service
 class UserService(
     @Autowired
-    val userRepository: UserRepository
-) {
+    val userRepository: UserRepository) {
 
     fun addUser(user: User): Mono<User> {
         if (user.userId == 0) {
@@ -65,7 +64,8 @@ class UserService(
 
         a=true
         return a
-    }*/
+    }
+    */
 }
 
 

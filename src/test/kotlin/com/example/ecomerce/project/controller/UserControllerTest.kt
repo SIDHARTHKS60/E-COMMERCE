@@ -114,7 +114,7 @@ class UserControllerTest {
             "userContactno" to 1234567890,
             "userPassword" to "abcd@abcd" )
 
-        val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
+        val user = User(999,"Rahul K" ,1234567890 , "abcd@abcd")
 
         every {
             userService.updateUser(999,user)
@@ -134,6 +134,7 @@ class UserControllerTest {
             userService.updateUser(999,user)
         }
     }
+
     @Test
     fun `should be able to delete the user`() {
 
