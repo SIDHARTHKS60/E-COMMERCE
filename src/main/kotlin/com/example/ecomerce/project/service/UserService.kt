@@ -52,7 +52,8 @@ class UserService(
             }
     }
 
-    /*fun findUserByName(name:String):Boolean{
+   /*
+   fun findUserByName(name:String):Boolean{
         var a:Boolean
         var orgpass:String
         userRepository.findByName(name)
@@ -66,3 +67,38 @@ class UserService(
         return a
     }*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///Sidharth - Saurabh 15091220
