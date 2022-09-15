@@ -18,7 +18,7 @@ class UserService(
 
     fun addUser(user: User): Mono<User> {
         if (user.userId == 0) {
-            throw UserIdException("User should id not zero")
+            throw UserIdException("UserId should not be zero")
         }
         return userRepository.save(user)
     }
@@ -36,7 +36,7 @@ class UserService(
 
     fun deleteUserById(userId: Int): Mono<Void> {
         if (userId == 0) {
-            throw UserIdException("User should id should  not zero")
+            throw UserIdException("UserId should  not  be zero")
         }
         return userRepository.deleteById(userId)
     }
