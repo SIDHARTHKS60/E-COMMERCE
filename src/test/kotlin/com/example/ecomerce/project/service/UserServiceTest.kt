@@ -19,11 +19,15 @@ class UserServiceTest {
 
         every {
             save(user1)
-        }returns Mono.just(user1)
+        } returns Mono.just(user1)
 
         every {
             findAll()
         } returns Flux.just(user1, user2)
+
+        every {
+            findById(888)
+        }returns Mono.just(user2)
 
         every {
             deleteById(999)
