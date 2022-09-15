@@ -145,54 +145,18 @@ class UserControllerTest {
 
         val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
 
-    val userId=999
     every {
-         userService.deleteUserById(999) }
-
-   /*val response=client.get("find/$userId")
-                        .returnResult
-                        .shouldBe(status { isNotFound() })*/
-                        //andExpect
-                        //{ status { isNotFound() } }
+         userService.deleteUserById(999) }returns  Mono.empty()
 
          val response = client.delete()
              .uri("/users/delete/999")
              .exchange()
              .expectStatus().is2xxSuccessful
 
-          response shouldBe
-
          verify(exactly = 1) {
              userService.deleteUserById(999)
         }
    }
-
-
-    /*
-    @Test
-    fun testDeleteUserById() {
-
-        val userId=999
-       mockMvc.delete("delete/$userId")
-           .andDo { print() }
-           .andExpect {
-               status { isNoContent() }
-           }
-
-      cilent.get("find/$userId")
-           .andExpect { status { isNotFound() } }
-
-
-       `when`(userService.deleteUserById(1))
-           .thenReturn(Mono.just("Employee with id 1 is deleted."))
-
-          client.delete()
-            .uri("delete/{id}")
-          .exchange()
-            .expectStatus().isOk()
-             .shouldBe("Employee with id 1 is deleted.")
-   }*/
-
 
     @TestConfiguration
     class ControllerTestConfig {
@@ -201,6 +165,31 @@ class UserControllerTest {
         }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
