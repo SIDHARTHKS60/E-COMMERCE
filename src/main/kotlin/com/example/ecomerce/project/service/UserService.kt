@@ -51,21 +51,7 @@ class UserService(
             }
     }
 
-   /*
-   fun findUserByName(name:String):Boolean{
-        var a:Boolean
-        var orgpass:String
-        userRepository.findByName(name)
-            .flatMap {
-               if( it.password==){
-                   a=true
-               }
-            a=false }
 
-        a=true
-        return a
-    }
-    */
 }
 
 

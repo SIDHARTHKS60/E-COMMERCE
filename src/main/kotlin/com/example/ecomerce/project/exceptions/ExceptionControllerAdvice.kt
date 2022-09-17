@@ -9,15 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 @ControllerAdvice
 class ExceptionControllerAdvice {
     //main class for exception
-    @ExceptionHandler
-    fun handleIllegalStateException(ex: IllegalStateException): ResponseEntity<ErrorMessageModel> {
-
-        val errorMessage = ErrorMessageModel(
-            HttpStatus.NOT_FOUND.value(),
-            ex.message
-        )
-        return ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST)
-    }
 
     @ExceptionHandler
     fun handleUserServiceException(ex: UserIdException): ResponseEntity<ErrorMessageModel> {
@@ -37,12 +28,12 @@ class ExceptionControllerAdvice {
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
     }
 
-     @ExceptionHandler
+    /* @ExceptionHandler
         fun handleProductNotFoundException(ex: ProductNotFoundException): ResponseEntity<ErrorMessageModel> {
         val errorMessage = ErrorMessageModel(
             HttpStatus.NOT_FOUND.value(),
             ex.message
         )
         return ResponseEntity(errorMessage, HttpStatus.NOT_FOUND)
-    }
+    }*/
 }

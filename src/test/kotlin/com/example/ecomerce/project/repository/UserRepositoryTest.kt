@@ -23,11 +23,9 @@ class UserRepositoryTest {
     fun `should find user for given id`() {
 
         val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
-
         userRepository.save(user).block()
-
-        val actualSaveApplication = userRepository.findById(999).block()
-
-        actualSaveApplication shouldBe user
+        val savedUser = userRepository.findById(999).block()
+        savedUser shouldBe user
     }
+
 }
