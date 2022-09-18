@@ -153,6 +153,37 @@ class UserControllerTest {
         }
    }
 
+    @Test
+    fun `should return a single user`() {
+
+        val exepectedResponse = mapOf(
+            "userId" to 999,
+            "userName" to "Rahul K",
+            "userContactno" to 1234567890,
+            "userPassword" to "Aaaaaa@aaa")
+
+        val user1=User(999,"Rahul K",1234567890,"Aaaaaa@aaa")
+
+        every {
+            userService.findUserById(999)
+        } returns Mono.just(user1)
+
+
+
+        val response = client.get()
+            .uri("/users/find/999")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange()
+            .expectStatus().is2xxSuccessful
+            .returnResult<Any>().responseBody
+
+        response.blockFirst() shouldBe exepectedResponse
+
+        verify(exactly = 1) {
+            userService.findUserById(999)
+        }
+
+    }
     @TestConfiguration
     class ControllerTestConfig {
         @Bean
