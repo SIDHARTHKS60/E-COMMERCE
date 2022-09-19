@@ -47,6 +47,7 @@ class UserServiceTest {
     @Test
     fun `Test adding User`() {
         val user1 = User(999, "Rahul", 1234567890, "abcd@abcd")
+
         every{
             userRepository.save(user1)
         }returns Mono.just(user1)
@@ -75,7 +76,7 @@ class UserServiceTest {
 @Test
     fun `Test update User`() {
 
-        val user1 = User(999,"Rahul K",9999999999,"Aaaaa@aaa")
+       // val user1 = User(999,"Rahul K",9999999999,"Aaaaa@aaa")
         every{
             userRepository.save(user1)
         }returns Mono.just(user1)
@@ -83,26 +84,4 @@ class UserServiceTest {
 
         updatedUser shouldBe user1
     }
-
-    /*@Test
-        fun `should add user to repsitory`(){
-
-            val firstUser=userService.addUser(user1)
-            if(firstUser != null){firstUser shouldBe user1}
-
-        }*/
-   /* @Test
-    fun `should expect on complete call post all the Users are retrieved`() {
-        //StepVerifier takes care of subscribing
-        StepVerifier.create(userService.findAllUsers())
-            .expectSubscription()
-            .expectNext(user1)
-            .expectNext(user2)
-            .verifyComplete()
-        StepVerifier.create(userService.findAllUsers())
-            .expectNextCount(2)
-            .verifyComplete()*/
-
 }
-
-
