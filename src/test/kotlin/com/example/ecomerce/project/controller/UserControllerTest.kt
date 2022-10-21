@@ -19,9 +19,7 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 @WebFluxTest(UserController::class)
-//@SpringBootTest
 @AutoConfigureWebTestClient
-//@AutoConfigureMockMvc
 class UserControllerTest {
     @Autowired
     lateinit var client: WebTestClient
@@ -140,7 +138,7 @@ class UserControllerTest {
 
         val user = User(999,"Rahul" ,1234567890 , "abcd@abcd")
 
-    every {
+         every {
          userService.deleteUserById(999) }returns  Mono.empty()
 
          val response = client.delete()
@@ -191,6 +189,7 @@ class UserControllerTest {
         }
 
 }
+//
 
 
 

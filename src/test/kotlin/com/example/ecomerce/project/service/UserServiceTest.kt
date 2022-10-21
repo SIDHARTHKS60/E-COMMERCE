@@ -24,9 +24,7 @@ class UserServiceTest {
         every {
             findById(999)
         }returns Mono.just(user1)
-
-
-         }
+    }
 
     private val userService = UserService(userRepository)
 
@@ -45,7 +43,7 @@ class UserServiceTest {
     }
 
     @Test
-    fun `Test adding User`() {
+    fun `test adding User`() {
         val user1 = User(999, "Rahul", 1234567890, "abcd@abcd")
 
         every{
@@ -58,7 +56,7 @@ class UserServiceTest {
     }
 
     @Test
-    fun `Test Find User By Id`() {
+    fun `test Find User By Id`() {
 
         val result=userService.findUserById(999).block()
 
@@ -73,8 +71,9 @@ class UserServiceTest {
             userRepository.deleteById(999)
         }returns Mono.empty()
     }
-@Test
-    fun `Test update User`() {
+
+    @Test
+    fun `test update User`() {
 
        // val user1 = User(999,"Rahul K",9999999999,"Aaaaa@aaa")
         every{
